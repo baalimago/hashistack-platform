@@ -1,0 +1,71 @@
+{
+    "min_packer_version": "0.12.0",
+    "variables": {
+        "aws_region": "eu-north-1",
+        "nomad_version": "1.5.6",
+        "consul_module_version": "v0.11.0",
+        "consul_version": "1.15.2",
+        "ami_name_prefix": "nomad-consul"
+    },
+    "builders": [{
+        "name": "ubuntu22-ami",
+        "ami_name": "{{user `ami_name_prefix`}}-docker-ubuntu22-{{isotime | clean_resource_name}}",
+        "ami_description": "An example of how to build an Ubuntu 22.04 AMI that has Nomad, Consul and Docker",
+        "instance_type": "t3.micro",
+        "region": "{{user `aws_region`}}",
+        "type": "amazon-ebs",
+        "source_ami_filter": {
+            "filters": {
+                "virtualization-type": "hvm",
+                "architecture": "x86_64",
+                "name": "ubuntu/images/hvm-ssd/ubuntu-kinetic-22.10-amd64-server-*",
+                "block-device-mapping.volume-type": "gp2",
+                "root-device-type": "ebs"
+            },
+            "owners": [
+                "099720109477"
+            ],
+            "most_recent": true
+        },
+        "ssh_username": "ubuntu"
+    }],
+    "provisioners": [{
+            "type": "shell",
+            "inline": ["mkdir -p /tmp/terraform-aws/modules", "mkdir -p /tmp/consul-config", "mkdir -p /tmp/nomad-config"]
+        },
+        {
+            "type": "shell",
+            "script": "{{template_dir}}/setup_ubuntu.sh",
+            "only": [
+                "ubuntu22-ami"
+            ]
+        },
+        {
+            "type": "file",
+            "source": "{{template_dir}}/../modules/",
+            "destination": "/tmp/terraform-aws/modules",
+            "pause_before": "30s"
+        },
+        {
+            "type": "file",
+            "source": "{{template_dir}}/consul-config.json",
+            "destination": "/tmp/consul-config/ami-conf.json",
+            "pause_before": "5s"
+        },
+        {
+            "type": "file",
+            "source": "{{template_dir}}/enable-acme-volume.hcl",
+            "destination": "/tmp/nomad-config/enable-acme-volume.hcl",
+            "pause_before": "5s"
+        },
+        {
+            "type": "shell",
+            "environment_vars": [
+                "NOMAD_VERSION={{user `nomad_version`}}",
+                "CONSUL_VERSION={{user `consul_version`}}",
+                "CONSUL_MODULE_VERSION={{user `consul_module_version`}}"
+            ],
+            "script": "{{template_dir}}/setup_nomad_consul.sh"
+        }
+    ]
+}

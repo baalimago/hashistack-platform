@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>lorentz.app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Lorentz Kinde">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <script type="module" src="index.js"></script>
+    <script type="module" src="links.js"></script>
+    <script type="module" src="menuText.js"></script>
+    <script>
+        function sendCloseMenuEvent() {
+            window.dispatchEvent(
+                new CustomEvent(
+                    "menu", {
+                        detail: {
+                            "type": "close"
+                        }
+                    }
+                )
+            )
+        }
+    </script>
+</head>
+
+<body>
+    <div id="bootstrap-cover"></div>
+    <div class="bg-container" onclick="sendCloseMenuEvent()"></div>
+    <imago-element class="config" path="imago-element/config/"></imago-element>
+    <div class="center-y">
+        <div id="text-content">
+            <div id="title" style="position: absolute; top: 40%;">
+                <h1>Hello, welcome to my website</h1>
+                <p id="titleP">Below is links to projects I work on from time to time. Inspect the element for technical details on the service.</p>
+            </div>
+
+            <div class="links-container hidden" id="main">
+            </div>
+
+            <div class="links-container" id="backup">
+                <div class="link particle-aware" id="klunk" data-subdomain="klunk">
+                    <h2>Klunk</h2>
+                    <p>Drink randomizer project I did as a birthday gift for my mom</p>
+                </div>
+
+                <div class="link particle-aware" id="redblue" data-subdomain="redblue">
+                    <h2>Redblue</h2>
+                    <p>Background animation. Good for wasting GPU power.</p>
+                </div>
+
+                <div class="link particle-aware" id="woof" data-subdomain="woof">
+                    <h2>Woof</h2>
+                    <p>Doggo game. Very high quality.</p>
+                </div>
+
+                <div class="link particle-aware" id="dev" data-subdomain="playground">
+                    <h2>Playground</h2>
+                    <p>Development page I use hobby webstack projects. Epilepcy warning!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

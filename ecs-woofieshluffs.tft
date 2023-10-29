@@ -1,0 +1,65 @@
+# Simply specify the family to find the latest ACTIVE revision in that family.
+
+module "woofieshluffs_ecs" {
+  source  = "./modules/mesh-task"
+  family                = "woofieshluffs_ecs"
+  container_definitions = [
+    {
+      name         = "woofieshluffs"
+      image        = "930819553298.dkr.ecr.eu-north-1.amazonaws.com/woofieshluffs:0.2.2"
+      essential    = true
+      cpu = 64
+    }
+  ]
+  log_configuration = {
+    "logDriver": "awslogs",
+    "options": {
+      "awslogs-region": "eu-north-1",
+      "awslogs-group": "lapp-log-grp",
+      "awslogs-stream-prefix": "lapp-ecs"
+    }
+  }
+  acls = false
+  port       = "8082"
+  consul_service_tags = [
+        "traefik.enable=true",
+        "launcher.description=Doggo game. Excellent quality. Hard on smartphones.",
+        "launcher.subDomain=woof",
+        "launcher.name=woofieshluffs",
+        "traefik.http.routers.woofieshluffs-https.tls=true",
+        "traefik.http.routers.woofieshluffs-https.tls.certresolver=myresolver",
+        "traefik.http.routers.woofieshluffs-https.tls.domains[0].main=lorentz.app",
+        "traefik.http.routers.woofieshluffs-https.tls.domains[0].sans=woof.lorentz.app",
+        "traefik.http.routers.woofieshluffs-https.rule=Host(`woof.lorentz.app`)",
+      ]
+  checks = [
+    {
+      checkId  = "server-http"
+      name     = "HTTP health check on port 8082"
+      http     = "http://localhost:8082/"
+      method   = "GET"
+      timeout  = "10s"
+      interval = "5s"
+    }
+  ]
+  retry_join = ["provider=aws region=eu-north-1 tag_key=nomad-servers tag_value=auto-join"]
+  consul_datacenter = "eu-north-1"
+  create_task_role = false
+  create_discoverer_role = false
+  create_execution_role =  false
+}
+
+resource "aws_ecs_service" "woofieshluffs_ecs_task" {
+  name            = "woofieshluffs_ecs_task"
+  cluster         = aws_ecs_cluster.lapp-cluster.arn
+  task_definition = module.woofieshluffs_ecs.task_definition_arn
+  desired_count = 1
+  network_configuration {
+    subnets = module.vpc.private_subnets
+    security_groups = [module.servers.security_group_id]
+  }
+  
+  launch_type     = "FARGATE"
+  propagate_tags  = "TASK_DEFINITION"
+  enable_execute_command = true
+}

@@ -1,0 +1,20 @@
+{
+    "amWorkers": 1,
+    "forceWorkers": false,
+    "logs": {
+        "representativeWorkerLogs": false,
+        "workerLogs": false,
+        "updatePerformance": false,
+        "updatesTracker": false
+    },
+    "maxParticles": 1000000,
+    "runtime": {
+        "a": 0.2,
+        "b": -1.1,
+        "c": -4.1,
+        "d": -3.9,
+        "zoomFactor": 3,
+        "t": 0.0003,
+        "amParticles": 10000
+    }
+}
