@@ -66,4 +66,4 @@ But, if you wish to give it a go though:
 1. `terraform apply`
 1. Create elastic IPs and attach to the nodes
 
-The last step is done manually so that you can keep the elastic IPs targeted in DNS external DNS services on multiple reboots.
+The last step is done manually so that you can keep the elastic IPs targeted in external DNS services on multiple reboots.
