@@ -60,11 +60,10 @@ I didn't bother with CI/CD though, since I didn't see a need for it.
 ## Taking it for a spin
 
 It should still work just fine, as long as you have AWS cli setup.
-Although, hosting a dedicated service orchistrator in a multi-node autoscaling cluster is quite complex, especially considering all the tweaks I did to maintain it
-If you wish to give it a go though:
+Although, hosting a dedicated service orchistrator in a multi-node autoscaling cluster is quite complex, especially considering all the tweaks I did to maintain it.
+But, if you wish to give it a go though:
 
-1. terraform destroy
-1. terraform apply
+1. `terraform apply`
 1. Create elastic IPs and attach to the nodes
 
 The last step is done manually so that you can keep the elastic IPs targeted in DNS external DNS services on multiple reboots.
