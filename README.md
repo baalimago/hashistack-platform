@@ -1,17 +1,20 @@
 # Personal Hashistack cluster
 
-This is the platform I was running for my microservices from ~2021-2023 where I hosted a multi-node cluster using hashistack, entrypoint being `https://lorentz.app`.
+![lorentz.app microservice launcher](./readme-assets/lorentz-app.png)
+
+This is the platform I was running for my microservices from ~2021-2023 where I hosted a multi-node cluster using hashistack, entrypoint being [https://lorentz.app](https://lorentz.app).
 I stopped hosting it since the NAT gateways costed more than what it was worth.
 
 I decided to publish the cluster here on github as a relic, my raspberry pi git-repo vanished when I was moving and I want to persist it somewhere.
 Also figured that people might be interested in a reference once I talk about it.
 
-Now (2024-11-01) `https://lorentz.app` is just a static website using s3 bucket + cloudfront, deployed using [Pulumi (go SDK)](https://www.pulumi.com/), which costs me nothing per month.
+Now (2024-11-01) [https://lorentz.app](https://lorentz.app) is just a static website using s3 bucket + cloudfront, deployed using [Pulumi (go SDK)](https://www.pulumi.com/), which costs me nothing per month.
 I've also progressed into hobby-coding open source projects instead, mostly written in Go.
 Checkout the projects from [my github profile](https://github.com/baalimago/).
 
 ## Design
 
+![original design, image borrowed from hashicorp's exammple](./readme-assets/architecture.png)
 This whole project is a playground.
 A such, the design is quite ad-hoc.
 
