@@ -12,11 +12,11 @@ The principles they all follow is the need for isolated deployment, and local de
 Although most have external dependencies, none are required for development.
 I explore this topic a bit closer here in [my blogpost about service isolation](https://lorentz.app/blog-item.html?id=service-isolation).
 
-So, to try out this launcher, simply run `go run .`, and you'll see what the launcher (and therefore `https://lorentz.app`) used to looked like.
+So, to try out this launcher, simply run `go run .`, and you'll see what the launcher (and therefore `https://lorentz.app`) used to looked like on https://localhost:8070.
 
 ## Deployment
 
-The deployment of this microservice is the same for all, even though they all have quite different dependencies and configurations. The steps are:
+The steps to deploy any of my microservices are:
 
 1. Build a docker image
 1. Push the docker image to the microservice's dedicated ECR (scripted, not shown in this project)
