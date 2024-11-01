@@ -6,6 +6,7 @@ There is a [nomad deployment file](./launcher.nomad) which specifies the require
 ## How it works
 The different microservices all works differently.
 They're written in a wide array of languages, depending on what I wanted to experiment with (Go, Rust, Quarkus).
+Since all of them would be containerized with docker, wrapped in a `Makefile`, the deployment is language agnostic.
 
 The principles they all follow is the need for isolated deployment, and local development.
 Although most have external dependencies, none are required for development.
